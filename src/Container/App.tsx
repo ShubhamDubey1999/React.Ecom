@@ -12,6 +12,7 @@ import {
   OrderConfirmed,
   MyOrders,
   OrderDetails,
+  MenuItemUpsert,
 } from "../Pages";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +24,8 @@ import { setLoggedInUser } from "../Storage/Redux/userAuthSlice";
 import { RootState } from "../Storage/Redux/store";
 import jwt_decode from "jwt-decode";
 import AllOrders from "../Components/Page/Order/AllOrders";
+import { MenuItemsList } from "../Components/Page/MenuItems";
+import MenuItemList from "../Pages/MenuItem/MenuItemList";
 function App() {
   const dispatch = useDispatch();
   const userData: userModel = useSelector(
@@ -57,8 +60,14 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/order/allOrders" element={<AllOrders />} />
           <Route path="/shoppingCart" element={<ShoppingCart />} />
+          <Route path="/menuItem/menuitemList" element={<MenuItemList />} />
           <Route path="/order/orderDetails/:id" element={<OrderDetails />} />
           <Route path="order/orderconfirmed/:id" element={<OrderConfirmed />} />
+          <Route
+            path="menuItem/MenuItemUpsert/:id"
+            element={<MenuItemUpsert />}
+          />
+          <Route path="menuItem/MenuItemUpsert" element={<MenuItemUpsert />} />
           <Route
             path="/menuItemDetails/:menuItemId"
             element={<MenuItemDetails />}
