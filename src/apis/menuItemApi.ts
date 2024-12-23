@@ -19,8 +19,37 @@ const menuItemApi = createApi({
       }),
       providesTags: ["MenuItems"],
     }),
+    CreateMenuItem: builder.mutation({
+      query: (data) => ({
+        url: "menuItem",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["MenuItems"],
+    }),
+    deleteMenuItem: builder.mutation({
+      query: (id) => ({
+        url: "menuItem/" + id,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MenuItems"],
+    }),
+    updateMenuItem: builder.mutation({
+      query: ({ data, id }) => ({
+        url: "menuItem/" + id,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["MenuItems"],
+    }),
   }),
 });
 
-export const {useGetMenuItemsQuery , useGetMenuItemByIdQuery} = menuItemApi;
+export const {
+  useGetMenuItemsQuery,
+  useGetMenuItemByIdQuery,
+  useCreateMenuItemMutation,
+  useDeleteMenuItemMutation,
+  useUpdateMenuItemMutation,
+} = menuItemApi;
 export default menuItemApi;
