@@ -7,13 +7,21 @@ import {
 } from "../../apis/menuItemApi";
 import { useNavigate, useParams } from "react-router-dom";
 import MainLoader from "../../Components/Page/Common/MainLoader";
+import { SD_Categories } from "../../Utility/SD";
+const Categories = [
+  SD_Categories.APPETIZER,
+  SD_Categories.ENTREE,
+  SD_Categories.DESSERT,
+  SD_Categories.BEVERAGES,
+];
 const menuItemData = {
   name: "",
   description: "",
   specialTag: "",
-  category: "",
+  category: Categories[0],
   price: "",
 };
+
 function MenuItemUpsert() {
   const { id } = useParams();
   const [menuItemInputs, setMenuItemInputs] = useState(menuItemData);
@@ -83,10 +91,10 @@ function MenuItemUpsert() {
     const formData = new FormData();
     formData.append("Name", menuItemInputs.name);
     formData.append("Description", menuItemInputs.description);
-    formData.append("SpecialTag", menuItemInputs.specialTag);
+    formData.append("SpecialTag", menuItemInputs.specialTag ?? "");
     formData.append("Category", menuItemInputs.category);
     formData.append("Price", menuItemInputs.price);
-    if (imageToBeDisplay) formData.append("Image", imageToBeStore);
+    if (imageToBeDisplay) formData.append("File", imageToBeStore);
 
     let response;
     if (id) {
@@ -138,14 +146,18 @@ function MenuItemUpsert() {
               value={menuItemInputs.specialTag}
               onChange={handleMenuItemInput}
             />
-            <input
-              type="text"
-              className="form-control mt-3"
-              placeholder="Enter Category"
+            <select
+              className="form-select form-control mt-3"
               name="category"
               value={menuItemInputs.category}
               onChange={handleMenuItemInput}
-            />
+            >
+              {Categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
             <input
               type="number"
               className="form-control mt-3"
